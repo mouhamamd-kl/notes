@@ -93,6 +93,8 @@ class _LoginviewState extends State<Loginview> {
               }
               if (tryit == true) {
                 popup("Welcome Back");
+                Navigator.pushNamedAndRemoveUntil(
+                    context, '/notes/', (route) => false);
               }
             },
             child: const Text("Login"),
