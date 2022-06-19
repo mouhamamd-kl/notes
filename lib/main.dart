@@ -38,12 +38,12 @@ class HomePage extends StatelessWidget {
       builder: (context, snapshot) {
         switch (snapshot.connectionState) {
           case ConnectionState.done:
-            print(FirebaseAuth.instance.currentUser);
+            // print(FirebaseAuth.instance.currentUser);
             final user = FirebaseAuth.instance.currentUser;
             if (user != null) {
               if (user.emailVerified == true) {
                 devtools.log("email verified");
-                print("email is verified");
+                //print("email is verified");
                 return const NotesView();
               } else {
                 return const VerifyEmailView();
@@ -72,13 +72,13 @@ final user = FirebaseAuth.instance;
 
 class _NotesViewState extends State<NotesView> {
   void popup(String? h) {
-    var snackBar1;
+    var snack;
     if (h != null) {
-      snackBar1 = SnackBar(
+      snack = SnackBar(
         content: Text(h),
       );
     }
-    ScaffoldMessenger.of(context).showSnackBar(snackBar1);
+    ScaffoldMessenger.of(context).showSnackBar(snack);
   }
 
   @override
@@ -90,7 +90,7 @@ class _NotesViewState extends State<NotesView> {
           actions: [
             PopupMenuButton<MenuAction>(
                 // add icon, by default "3 dot" icon
-                icon: Icon(Icons.settings),
+                icon: const Icon(Icons.settings),
                 itemBuilder: (context) {
                   return [
                     const PopupMenuItem<MenuAction>(
@@ -115,7 +115,12 @@ class _NotesViewState extends State<NotesView> {
                   }
                 }),
           ]),
-      body: Text('Welcome ${user.currentUser?.email}'),
+      body: Column(
+        children: [
+          Text('Welcome ${user.currentUser?.email}'),
+          Image.asset('assets/images/12.png')
+        ],
+      ),
     );
   }
 }
@@ -143,7 +148,7 @@ Future<bool> showLoutOutDialog(BuildContext context) {
           ),
         ],
         elevation: 100,
-        backgroundColor: Color.fromARGB(255, 255, 255, 255),
+        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       );
     },
   ).then((value) => value ?? false);

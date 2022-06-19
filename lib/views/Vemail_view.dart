@@ -1,8 +1,5 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:notes/views/login_view.dart';
-import 'package:notes/views/register_view.dart';
 
 class VerifyEmailView extends StatefulWidget {
   const VerifyEmailView({Key? key}) : super(key: key);
@@ -26,7 +23,7 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
       body: Column(
         children: [
           (const Text("enter your email")),
-          TextField(),
+          const TextField(),
           TextButton(
               onPressed: () async {
                 final user = FirebaseAuth.instance.currentUser;

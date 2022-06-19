@@ -44,27 +44,28 @@ class _RegisteViewState extends State<RegisteView> {
               final email = _email.text;
               final password = _password.text;
               try {
-                final userCredential = await FirebaseAuth.instance
-                    .createUserWithEmailAndPassword(
-                        email: email, password: password);
-                print(userCredential);
+                await FirebaseAuth.instance.createUserWithEmailAndPassword(
+                  email: email,
+                  password: password,
+                );
+                //print(userCredential);
               } on FirebaseAuthException catch (e) {
                 switch (e.code) {
                   case "email-already-in-use":
                     popup(e.code);
-                    print(e.code);
+                    //print(e.code);
                     break;
                   case "invalid-email":
                     popup(e.code);
-                    print(e.code);
+                    // print(e.code);
                     break;
                   case "operation-not-allowed":
                     popup(e.code);
-                    print(e.code);
+                    // print(e.code);
                     break;
                   case "weak-password":
                     popup(e.code);
-                    print(e.code);
+                    // print(e.code);
                     break;
                 }
               }
@@ -74,7 +75,10 @@ class _RegisteViewState extends State<RegisteView> {
           ElevatedButton(
               onPressed: () {
                 Navigator.pushNamedAndRemoveUntil(
-                    context, '/login/', (route) => false);
+                  context,
+                  '/login/',
+                  (route) => false,
+                );
               },
               child: const Text("log in here")),
         ],
