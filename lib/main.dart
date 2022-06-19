@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:notes/views/Vemail_view.dart';
 import 'package:notes/views/login_view.dart';
 import 'package:notes/views/register_view.dart';
+import 'constatns/routes.dart';
 import 'firebase_options.dart';
 import 'dart:developer' as devtools show log;
 
@@ -107,7 +108,8 @@ class _NotesViewState extends State<NotesView> {
                       if (shoudlogout == true) {
                         FirebaseAuth.instance.signOut();
                         Navigator.of(context)
-                            .pushNamedAndRemoveUntil('/login/', (_) => false);
+                            .pushNamedAndRemoveUntil(loginRoute, (_) => false);
+                        // route(loginRoute, context);
                       }
                       devtools.log(shoudlogout.toString());
                       break;

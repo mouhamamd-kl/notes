@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:notes/constatns/routes.dart';
+
+import '../main.dart';
 
 class Loginview extends StatefulWidget {
   const Loginview({Key? key}) : super(key: key);
@@ -94,7 +97,11 @@ class _LoginviewState extends State<Loginview> {
               if (tryit == true) {
                 popup("Welcome Back");
                 Navigator.pushNamedAndRemoveUntil(
-                    context, '/notes/', (route) => false);
+                  context,
+                  notesRoute,
+                  (route) => false,
+                );
+                // route(notesRoute, context);
               }
             },
             child: const Text("Login"),

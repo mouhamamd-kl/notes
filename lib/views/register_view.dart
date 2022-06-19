@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:notes/constatns/routes.dart';
+
+import '../main.dart';
 
 class RegisteView extends StatefulWidget {
   const RegisteView({Key? key}) : super(key: key);
@@ -76,9 +79,10 @@ class _RegisteViewState extends State<RegisteView> {
               onPressed: () {
                 Navigator.pushNamedAndRemoveUntil(
                   context,
-                  '/login/',
+                  loginRoute,
                   (route) => false,
                 );
+                //route(loginRoute, context);
               },
               child: const Text("log in here")),
         ],
