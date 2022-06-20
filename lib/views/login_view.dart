@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:notes/constatns/routes.dart';
+import 'package:notes/views/show_error_dialog.dart';
 
 import '../main.dart';
 
@@ -74,25 +75,37 @@ class _LoginviewState extends State<Loginview> {
                 tryit = true;
               } on FirebaseAuthException catch (e) {
                 switch (e.code) {
-                  case "user-not-found":
-                    popup(e.code);
-                    break;
-                  case "user-disabled":
-                    popup(e.code);
-                    break;
-                  case "invalid-email":
-                    popup(e.code);
-                    break;
-                  case "wrong-password":
-                    popup(e.code);
-                    break;
-                  case "Weak password":
-                    popup(e.code);
-                    break;
-                  case "email is already in use":
-                    popup(e.code);
-                    break;
+                  default:
+                    await showerrordialog(context, ' ${(e.code).toString()}');
+                  // case "user-not-found":
+                  //   popup(e.code);
+                  //   break;
+                  // case "user-disabled":
+                  //   popup(e.code);
+                  //   break;
+                  // case "invalid-email":
+                  //   popup(e.code);
+                  //   break;
+                  // case "wrong-password":
+                  //   popup(e.code);
+                  //   showerrordialog(
+                  //     context,
+                  //     "email is already in use",
+                  //   );
+                  //   break;
+                  // case "Weak password":
+                  //   popup(e.code);
+                  //   break;
+                  // case "email is already in use":
+                  //    popup(e.code);
+                  //   showerrordialog(
+                  //     context,
+                  //     "email is already in use",
+                  //   );
+                  //   break;
                 }
+              } catch (e) {
+                showerrordialog(context, 'Error :$e');
               }
               if (tryit == true) {
                 popup("Welcome Back");

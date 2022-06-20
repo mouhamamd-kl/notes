@@ -155,6 +155,7 @@ Future<bool> showLoutOutDialog(BuildContext context) {
     },
   ).then((value) => value ?? false);
 }
+
 /*class VerifyEmailView extends StatefulWidget {
   const VerifyEmailView({Key? key}) : super(key: key);
 
