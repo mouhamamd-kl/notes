@@ -19,8 +19,9 @@ void main() async {
       routes: {
         '/login/': (context) => const Loginview(),
         '/register/': (context) => const RegisteView(),
-        'home': (context) => const HomePage(),
+        '/home/': (context) => const HomePage(),
         '/notes/': (context) => const NotesView(),
+        '/verifiyemail/': (context) => const VerifyEmailView(),
         /*Here's where you receive your routes, and it is also the main widget*/
       },
     ),

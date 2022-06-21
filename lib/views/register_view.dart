@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:notes/constatns/routes.dart';
+import 'package:notes/views/show_error_dialog.dart';
 
 import '../main.dart';
 
@@ -41,6 +42,9 @@ class _RegisteViewState extends State<RegisteView> {
           const Text("Enter Your Password"),
           TextField(
             controller: _password,
+            obscureText: true,
+            enableSuggestions: false,
+            autocorrect: false,
           ),
           ElevatedButton(
             onPressed: () async {
@@ -51,27 +55,49 @@ class _RegisteViewState extends State<RegisteView> {
                   email: email,
                   password: password,
                 );
+                final user = FirebaseAuth.instance.currentUser;
+                await user?.sendEmailVerification();
+                Navigator.of(context).pushNamed(verifyEmailRoute);
                 //print(userCredential);
               } on FirebaseAuthException catch (e) {
                 switch (e.code) {
                   case "email-already-in-use":
-                    popup(e.code);
+                    showerrordialog(
+                      context,
+                      "email-already-in-use",
+                    );
+                    // popup(e.code);
                     //print(e.code);
                     break;
                   case "invalid-email":
-                    popup(e.code);
+                    showerrordialog(
+                      context,
+                      "invalid-email",
+                    );
+                    // popup(e.code);
                     // print(e.code);
                     break;
                   case "operation-not-allowed":
-                    popup(e.code);
+                    showerrordialog(
+                      context,
+                      "operation-not-allowed",
+                    );
+                    //popup(e.code);
                     // print(e.code);
                     break;
                   case "weak-password":
-                    popup(e.code);
+                    showerrordialog(
+                      context,
+                      "weak-password",
+                    );
+                    // popup(e.code);
                     // print(e.code);
                     break;
                 }
+              } catch (e) {
+                showerrordialog(context, "Error : ${e.toString()}");
               }
+              print(user.currentUser);
             },
             child: const Text("register"),
           ),

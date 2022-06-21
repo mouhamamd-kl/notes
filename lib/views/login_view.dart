@@ -71,8 +71,13 @@ class _LoginviewState extends State<Loginview> {
                 final userCredential = await FirebaseAuth.instance
                     .signInWithEmailAndPassword(
                         email: email, password: password);
+                if (userCredential.user?.emailVerified != true) {
+                  showerrordialog(context, "email is not verified");
+                  FirebaseAuth.instance.signOut();
+                } else {
+                  tryit = true;
+                }
                 // print(userCredential);
-                tryit = true;
               } on FirebaseAuthException catch (e) {
                 switch (e.code) {
                   default:

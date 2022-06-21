@@ -9,6 +9,8 @@ import 'dart:developer' as devtools show log;
 const loginRoute = '/login/';
 const registerRoute = '/regitser/';
 const notesRoute = '/notes/';
+const verifyEmailRoute = '/verifiyemail/';
+const homeRoute = '/home/';
 void route(g, context) {
   Navigator.of(context).pushNamedAndRemoveUntil(g, (route) => false);
 }
