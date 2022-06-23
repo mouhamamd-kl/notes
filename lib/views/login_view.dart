@@ -71,11 +71,23 @@ class _LoginviewState extends State<Loginview> {
                 final userCredential = await FirebaseAuth.instance
                     .signInWithEmailAndPassword(
                         email: email, password: password);
-                if (userCredential.user?.emailVerified != true) {
-                  showerrordialog(context, "email is not verified");
-                  FirebaseAuth.instance.signOut();
+                final user = FirebaseAuth.instance.currentUser;
+                if (user?.emailVerified == true) {
+                  popup("Welcome Back");
+                  Navigator.pushNamedAndRemoveUntil(
+                    context,
+                    notesRoute,
+                    (route) => false,
+                  );
                 } else {
-                  tryit = true;
+                  // email is verified
+                  //showerrordialog(context, "email is not verified");
+                  FirebaseAuth.instance.signOut();
+                  Navigator.pushNamedAndRemoveUntil(
+                    context,
+                    verifyEmailRoute,
+                    (route) => false,
+                  );
                 }
                 // print(userCredential);
               } on FirebaseAuthException catch (e) {
@@ -113,12 +125,6 @@ class _LoginviewState extends State<Loginview> {
                 showerrordialog(context, 'Error :$e');
               }
               if (tryit == true) {
-                popup("Welcome Back");
-                Navigator.pushNamedAndRemoveUntil(
-                  context,
-                  notesRoute,
-                  (route) => false,
-                );
                 // route(notesRoute, context);
               }
             },
