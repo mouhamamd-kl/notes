@@ -22,7 +22,7 @@ void main() async {
         '/home/': (context) => const HomePage(),
         '/notes/': (context) => const NotesView(),
         '/verifiyemail/': (context) => const VerifyEmailView(),
-        /*Here's where you receive your routes, and it is also the main widget*/
+        /*Here'  where you receive your routes, and it is also the main widget*/
       },
     ),
   );

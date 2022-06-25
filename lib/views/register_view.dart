@@ -97,7 +97,6 @@ class _RegisteViewState extends State<RegisteView> {
               } catch (e) {
                 showerrordialog(context, "Error : ${e.toString()}");
               }
-              print(user.currentUser);
             },
             child: const Text("register"),
           ),

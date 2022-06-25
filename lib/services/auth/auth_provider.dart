@@ -1,4 +1,3 @@
-import 'dart:ffi';
 import 'auth_user.dart';
 import 'package:notes/services/auth/auth_user.dart';
 
