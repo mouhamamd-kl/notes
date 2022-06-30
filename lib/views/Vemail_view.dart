@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:notes/constatns/routes.dart';
 import 'dart:developer' as devtools show log;
 
 import 'package:notes/main.dart';
+import 'package:notes/services/auth/auth_service.dart';
 
 class VerifyEmailView extends StatefulWidget {
   const VerifyEmailView({Key? key}) : super(key: key);
@@ -38,7 +38,7 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
                 devtools.log(value.toString());
                 switch (value) {
                   case "Restart":
-                    FirebaseAuth.instance.signOut();
+                    await AuthService.firebase().logOut();
                     Navigator.of(context)
                         .pushNamedAndRemoveUntil(loginRoute, (_) => false);
                     // route(loginRoute, context);
@@ -56,24 +56,25 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
               "if you haven't recived a verification email yet ,press the button below")),
           TextButton(
               onPressed: () async {
-                final user = FirebaseAuth.instance.currentUser;
+                await AuthService.firebase().sendEmailVerification();
+                //final user = FirebaseAuth.instance.currentUser;
                 // Future<void> sendEmailVerification([
                 //   ActionCodeSettings? actionCodeSettings,
                 // ]) async {
                 //   await user?.sendEmailVerification(actionCodeSettings);
                 // }
-                await user?.sendEmailVerification();
-                if (user != null) {
-                  if (user.emailVerified == true) {
-                    Navigator.of(context)
-                        .pushNamedAndRemoveUntil(notesRoute, (route) => false);
-                  }
-                }
+                //await user?.sendEmailVerification();
+                //  if (user != null) {
+                //   if (user.emailVerified == true) {
+                //     Navigator.of(context)
+                //         .pushNamedAndRemoveUntil(notesRoute, (route) => false);
+                //   }
+                // }
               },
               child: const Text("Send Email Verification")),
           ElevatedButton(
               onPressed: () async {
-                await FirebaseAuth.instance.signOut();
+                await AuthService.firebase().logOut();
                 Navigator.of(context).pushNamedAndRemoveUntil(
                   registerRoute,
                   (route) => false,

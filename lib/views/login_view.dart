@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:notes/constatns/routes.dart';
+import 'package:notes/services/auth/auth_exceptions.dart';
 import 'package:notes/views/show_error_dialog.dart';
-
-import '../main.dart';
+import 'package:notes/services/auth/auth_service.dart';
 
 class Loginview extends StatefulWidget {
   const Loginview({Key? key}) : super(key: key);
@@ -66,13 +65,15 @@ class _LoginviewState extends State<Loginview> {
             onPressed: () async {
               final email = _email.text;
               final password = _password.text;
+
               bool tryit = false;
               try {
-                final userCredential = await FirebaseAuth.instance
-                    .signInWithEmailAndPassword(
-                        email: email, password: password);
-                final user = FirebaseAuth.instance.currentUser;
-                if (user?.emailVerified == true) {
+                await AuthService.firebase().logIn(
+                  email: email,
+                  password: password,
+                );
+                final user = AuthService.firebase().currentUser;
+                if (user?.isEmailverified ?? false) {
                   popup("Welcome Back");
                   Navigator.pushNamedAndRemoveUntil(
                     context,
@@ -82,7 +83,7 @@ class _LoginviewState extends State<Loginview> {
                 } else {
                   // email is verified
                   //showerrordialog(context, "email is not verified");
-                  FirebaseAuth.instance.signOut();
+                  AuthService.firebase().logOut();
                   Navigator.pushNamedAndRemoveUntil(
                     context,
                     verifyEmailRoute,
@@ -90,7 +91,19 @@ class _LoginviewState extends State<Loginview> {
                   );
                 }
                 // print(userCredential);
-              } on FirebaseAuthException catch (e) {
+              } on UserNotFoundAuthException {
+                await showerrordialog(
+                  context,
+                  'User not found',
+                );
+              } on WrongPasswordAuthException {
+                await showerrordialog(
+                  context,
+                  'Wrong Password',
+                );
+              } on GenericAuthException catch (e) {
+                await showerrordialog(context, e.toString());
+              } /* on FirebaseAuthException catch (e) {
                 switch (e.code) {
                   default:
                     await showerrordialog(context, ' ${(e.code).toString()}');
@@ -126,7 +139,7 @@ class _LoginviewState extends State<Loginview> {
               }
               if (tryit == true) {
                 // route(notesRoute, context);
-              }
+              }*/
             },
             child: const Text("Login"),
           ),

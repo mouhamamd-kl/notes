@@ -11,7 +11,10 @@ class AuthService implements AuthProvider {
     required String email,
     required String password,
   }) =>
-      provider.createUser(email: email, password: password);
+      provider.createUser(
+        email: email,
+        password: password,
+      );
 
   @override
   AuthUser? get currentUser => provider.currentUser;
@@ -21,7 +24,10 @@ class AuthService implements AuthProvider {
     required String email,
     required String password,
   }) =>
-      provider.logIn(email: email, password: password);
+      provider.logIn(
+        email: email,
+        password: password,
+      );
   @override
   Future<void> logOut() => provider.logOut();
 
@@ -29,8 +35,5 @@ class AuthService implements AuthProvider {
   Future<void> sendEmailVerification() => provider.sendEmailVerification();
 
   @override
-  Future<void> initialize() {
-    // TODO: implement initialize
-    throw UnimplementedError();
-  }
+  Future<void> initialize() => provider.initialize();
 }

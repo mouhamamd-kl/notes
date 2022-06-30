@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:notes/constatns/routes.dart';
+import 'package:notes/services/auth/auth_exceptions.dart';
+import 'package:notes/services/auth/auth_service.dart';
 import 'package:notes/views/show_error_dialog.dart';
-
-import '../main.dart';
 
 class RegisteView extends StatefulWidget {
   const RegisteView({Key? key}) : super(key: key);
@@ -51,15 +50,36 @@ class _RegisteViewState extends State<RegisteView> {
               final email = _email.text;
               final password = _password.text;
               try {
-                await FirebaseAuth.instance.createUserWithEmailAndPassword(
+                await AuthService.firebase().createUser(
                   email: email,
                   password: password,
                 );
-                final user = FirebaseAuth.instance.currentUser;
-                await user?.sendEmailVerification();
+                //final user = AuthService.firebase().currentUser;
+                await AuthService.firebase().sendEmailVerification();
                 Navigator.of(context).pushNamed(verifyEmailRoute);
                 //print(userCredential);
-              } on FirebaseAuthException catch (e) {
+              } on EmailAlreadyInUseAuthException catch (e) {
+                await showerrordialog(
+                  context,
+                  "email-already-in-use",
+                );
+                popup(e.toString());
+              } on InvalidEmailAuthException {
+                await showerrordialog(
+                  context,
+                  'Invalid email',
+                );
+              } on WeakPasswordAuthException {
+                await showerrordialog(
+                  context,
+                  'Weak Password',
+                );
+              } on GenericAuthException {
+                await showerrordialog(
+                  context,
+                  "Authentication error",
+                );
+              } /* on FirebaseAuthException catch (e) {
                 switch (e.code) {
                   case "email-already-in-use":
                     showerrordialog(
@@ -96,7 +116,7 @@ class _RegisteViewState extends State<RegisteView> {
                 }
               } catch (e) {
                 showerrordialog(context, "Error : ${e.toString()}");
-              }
+              }*/
             },
             child: const Text("register"),
           ),
