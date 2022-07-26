@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:notes/constatns/routes.dart';
 import 'package:notes/services/auth/auth_service.dart';
 import 'package:notes/views/Vemail_view.dart';
 import 'package:notes/views/login_view.dart';
-import 'package:notes/views/notes_view.dart';
+import 'package:notes/views/notes/notes_view.dart';
+import 'package:notes/views/notes/new_note_view.dart';
 import 'package:notes/views/register_view.dart';
 import 'dart:developer' as devtools show log;
 
@@ -17,11 +19,12 @@ void main() {
       ),
       home: const HomePage(),
       routes: {
-        '/login/': (context) => const Loginview(),
-        '/register/': (context) => const RegisteView(),
-        '/home/': (context) => const HomePage(),
-        '/notes/': (context) => const NotesView(),
-        '/verifiyemail/': (context) => const VerifyEmailView(),
+        loginRoute: (context) => const Loginview(),
+        registerRoute: (context) => const RegisteView(),
+        homeRoute: (context) => const HomePage(),
+        notesRoute: (context) => const NotesView(),
+        verifyEmailRoute: (context) => const VerifyEmailView(),
+        newNoteRoute: (context) => const NewNoteView(),
         /*Here'  where you receive your routes, and it is also the main widget*/
       },
     ),

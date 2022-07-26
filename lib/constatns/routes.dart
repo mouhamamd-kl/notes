@@ -11,6 +11,7 @@ const registerRoute = '/regitser/';
 const notesRoute = '/notes/';
 const verifyEmailRoute = '/verifiyemail/';
 const homeRoute = '/home/';
+const newNoteRoute = '/notes/new-note/';
 void route(g, context) {
   Navigator.of(context).pushNamedAndRemoveUntil(g, (route) => false);
 }
